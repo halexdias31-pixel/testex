@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivory Interiors | Premium Flooring</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #c5a880;
+            --bg-color: #f9f9f9;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-weight: 300;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+        }
+
+        .catchphrase {
+            font-style: italic;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .calculator-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .calculator-card h3 {
+            margin-top: 0;
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: #fafafa;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 18px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+        }
+
+        #quote-result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            min-height: 40px;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Ivory Interiors</h1>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Transforming Spaces.</h2>
+            <p>We deliver premium, high-quality flooring and interior finishing tailored to elevate your home's aesthetic.</p>
+            <p class="catchphrase">"Let the mandem into your house and floor that bitch!"</p>
+        </div>
+
+        <div class="calculator-card">
+            <h3>Instant Estimate Calculator</h3>
+            
+            <div class="form-group">
+                <label for="length">Room Length (Meters)</label>
+                <input type="number" id="length" placeholder="e.g. 5" min="1" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="width">Room Width (Meters)</label>
+                <input type="number" id="width" placeholder="e.g. 4" min="1" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="material">Material Selection</label>
+                <select id="material">
+                    <option value="" disabled selected>Select your flooring...</option>
+                    <option value="25">Premium Laminate (£25 / sq m)</option>
+                    <option value="45">Engineered Wood (£45 / sq m)</option>
+                    <option value="75">Solid Oak (£75 / sq m)</option>
+                    <option value="35">Luxury Carpet (£35 / sq m)</option>
+                </select>
+            </div>
+
+            <button onclick="calculateQuote()">Calculate Quote</button>
+
+            <div id="quote-result"></div>
+            <p class="disclaimer">*Includes standard fitting and underlay. Final quotes are subject to an on-site survey.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ivory Interiors. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function calculateQuote() {
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const materialDropdown = document.getElementById('material');
+            const materialPrice = parseFloat(materialDropdown.value);
+            const resultDiv = document.getElementById('quote-result');
+
+            if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
+                resultDiv.style.color = '#d9534f';
+                resultDiv.innerText = "Please enter valid room dimensions.";
+                return;
+            }
+
+            if (isNaN(materialPrice)) {
+                resultDiv.style.color = '#d9534f';
+                resultDiv.innerText = "Please select a flooring material.";
+                return;
+            }
+
+            // Calculate Area
+            const squareMeters = length * width;
+
+            // Calculate Material Cost
+            const totalMaterialCost = squareMeters * materialPrice;
+
+            // Add standard fitting rate (£15 per sq m)
+            const fittingRate = 15; 
+            const totalFittingCost = squareMeters * fittingRate;
+
+            // Final Total
+            const finalQuote = totalMaterialCost + totalFittingCost;
+
+            // Display Result
+            resultDiv.style.color = 'var(--primary-color)';
+            resultDiv.innerHTML = `Estimated Quote: <strong>£${finalQuote.toFixed(2)}</strong>`;
+        }
+    </script>
+</body>
+</html>
